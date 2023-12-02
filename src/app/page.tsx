@@ -1,19 +1,13 @@
-"use client";
-import Image from "next/image";
+import SignUp from "@/components/SignUp";
+import ToHome from "@/components/ToHome";
 
-export default function Home() {
-  const handleSignup = () => {};
-
+export default async function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       {/* //Signup */}
       <div className="mt-2">
-        <button
-          onClick={handleSignup}
-          className="text-black p-2 rounded-xl bg-gray-50 hover:bg-white  transition-all"
-        >
-          Signup/Login
-        </button>
+        <SignUp></SignUp>
+        <ToHome></ToHome>
       </div>
     </main>
   );
