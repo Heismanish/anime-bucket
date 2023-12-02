@@ -1,3 +1,4 @@
+"use client";
 import { useSession } from "next-auth/react";
 import React from "react";
 import Avatar from "react-avatar";
@@ -11,9 +12,9 @@ function Navbar() {
   if (status === "loading") {
     return <Loader></Loader>;
   }
-  //   console.log(session);
+
   return (
-    <div className=" top-0 px-4 py-2 flex justify-between items-center relative">
+    <div className="sticky z-[100] top-0 px-4 py-2 flex justify-between items-center bg-[#111111] opacity-90">
       <span className="font-bold text-base">Logo</span>
       {session ? (
         <div className="flex items-center gap-2">
@@ -24,7 +25,9 @@ function Navbar() {
           <Logout></Logout>
         </div>
       ) : (
-        <SignUp />
+        <div className="flex items-center justify-center">
+          <SignUp />
+        </div>
       )}
     </div>
   );

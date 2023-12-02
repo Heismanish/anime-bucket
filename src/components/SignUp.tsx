@@ -20,18 +20,18 @@ function SignUp() {
 
       router.push("/home");
     }
-  }, [session, router, updateUserInfo, userInfo]);
+  }, [session, router, updateUserInfo]);
 
   return (
-    <div>
-      {" "}
+    <>
       <button
+        type="button"
         onClick={() => signIn()}
-        className="text-black p-2 rounded-xl bg-gray-50 hover:bg-white  transition-all"
+        className="text-white font-semibold bg-[#2d63b8] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50  rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2"
       >
-        SignUp/Login
+        Sign in
       </button>
-    </div>
+    </>
   );
 }
 
