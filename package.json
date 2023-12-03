@@ -20,6 +20,7 @@
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
     "react-intersection-observer": "^9.5.3",
+    "react-modal": "^3.16.1",
     "zustand": "^4.4.7"
   },
   "devDependencies": {
@@ -27,6 +28,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/react-modal": "^3.16.3",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.0.3",

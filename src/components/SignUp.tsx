@@ -4,7 +4,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/store/zustand";
 
-function SignUp() {
+function SignUp({ data }: { data: string }) {
   const router = useRouter();
   const { data: session } = useSession();
   const { userInfo, updateUserInfo } = useUserStore();
@@ -29,7 +29,7 @@ function SignUp() {
         onClick={() => signIn()}
         className="text-white font-semibold bg-[#2d63b8] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50  rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#4285F4]/55 me-2 mb-2"
       >
-        Sign in
+        {data}
       </button>
     </>
   );

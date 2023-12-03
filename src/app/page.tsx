@@ -6,7 +6,7 @@ export default async function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between">
       {/* //Signup */}
       <div className="mt-2">
-        <SignUp></SignUp>
+        <SignUp data="SignIn"></SignUp>
         <ToHome></ToHome>
       </div>
     </main>

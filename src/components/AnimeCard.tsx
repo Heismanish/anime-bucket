@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { MotionDiv } from "./MotionDiv";
 import AddToCategory from "./AddToCategory";
+import CategoryModal from "./Modal";
 
 export interface AnimeProp {
   id: string;
@@ -25,6 +26,16 @@ const variant = {
 };
 
 function AnimeCard({ anime, index }: Prop) {
+  async function onClose() {
+    "use server";
+    console.log("on close");
+  }
+
+  async function onOk() {
+    "use server";
+    console.log("on ok");
+  }
+
   return (
     <MotionDiv
       variants={variant}
@@ -39,6 +50,9 @@ function AnimeCard({ anime, index }: Prop) {
       className="max-w-sm rounded relative w-full"
     >
       <div className="relative w-full h-[37vh]">
+        <CategoryModal title={anime.name} onClose={onClose} onOk={onOk}>
+          {anime.id}
+        </CategoryModal>
         <Image
           src={`https://shikimori.one${anime.image.original}`}
           alt={anime.name}

@@ -26,7 +26,7 @@ function Navbar() {
         </div>
       ) : (
         <div className="flex items-center justify-center">
-          <SignUp />
+          <SignUp data="Login" />
         </div>
       )}
     </div>
