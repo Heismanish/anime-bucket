@@ -5,11 +5,10 @@ import { useSession } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-function AddToCategory() {
+function AddToCategory({ key }: { key: string }) {
   const { data: session } = useSession();
-  const [showModal, setShowModal] = useState(true);
   const router = useRouter();
-
+  console.log(key);
   console.log(session);
   const showCategoryModal = () => {
     if (!session) {
@@ -17,8 +16,7 @@ function AddToCategory() {
       return;
     }
     toast.success("Userd!");
-    router.push("?showDialog=y");
-    setShowModal(!showModal);
+    router.push(`?showDialog=y&key=${key}`);
   };
   return (
     <div>

@@ -2,6 +2,8 @@ import Image from "next/image";
 import { MotionDiv } from "./MotionDiv";
 import AddToCategory from "./AddToCategory";
 import CategoryModal from "./Modal";
+import Link from "next/link";
+import { AnimeDataHome } from "@/lib/AnimeResponse";
 
 export interface AnimeProp {
   id: string;
@@ -16,7 +18,7 @@ export interface AnimeProp {
 }
 
 interface Prop {
-  anime: AnimeProp;
+  anime: AnimeDataHome;
   index: number;
 }
 
@@ -26,15 +28,9 @@ const variant = {
 };
 
 function AnimeCard({ anime, index }: Prop) {
-  async function onClose() {
-    "use server";
-    console.log("on close");
-  }
-
-  async function onOk() {
-    "use server";
-    console.log("on ok");
-  }
+  console.log(anime, anime.attributes.titles.en);
+  // console.log(anime.name);
+  console.log(anime.id);
 
   return (
     <MotionDiv
@@ -50,12 +46,9 @@ function AnimeCard({ anime, index }: Prop) {
       className="max-w-sm rounded relative w-full"
     >
       <div className="relative w-full h-[37vh]">
-        <CategoryModal title={anime.name} onClose={onClose} onOk={onOk}>
-          {anime.id}
-        </CategoryModal>
         <Image
-          src={`https://shikimori.one${anime.image.original}`}
-          alt={anime.name}
+          src={anime?.attributes?.coverImage?.original!}
+          alt={anime.attributes.titles.en}
           fill
           className="rounded-xl"
         />
@@ -63,11 +56,12 @@ function AnimeCard({ anime, index }: Prop) {
       <div className="py-4 flex flex-col gap-3">
         <div className="flex justify-between items-center gap-1">
           <h2 className="font-bold text-white text-xl line-clamp-1 w-full">
-            {anime.name}
+            {anime.attributes.titles.en}
           </h2>
+          <Link href={`?showDialog=y&key=${anime.id}`}>{anime.id}</Link>
           <div className="py-1 px-2 bg-[#161921] rounded-sm">
             <p className="text-white text-sm font-bold capitalize">
-              {anime.kind}
+              {anime.type}
             </p>
           </div>
         </div>
@@ -82,7 +76,7 @@ function AnimeCard({ anime, index }: Prop) {
                 className="object-contain"
               />
               <p className="text-base text-white font-bold">
-                {anime.episodes || anime.episodes_aired}
+                {anime.attributes.episodeCount}
               </p>
             </div>
             <div className="flex flex-row gap-2 items-center">
@@ -93,10 +87,12 @@ function AnimeCard({ anime, index }: Prop) {
                 height={18}
                 className="object-contain"
               />
-              <p className="text-base font-bold text-[#fff]">{anime.score}</p>
+              <p className="text-base font-bold text-[#fff]">
+                {anime.attributes.averageRating}
+              </p>
             </div>
           </div>
-          <AddToCategory />
+          <AddToCategory key={anime.id} />
         </div>
       </div>
     </MotionDiv>
