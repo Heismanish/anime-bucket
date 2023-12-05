@@ -7,7 +7,7 @@ import React from "react";
 async function Dashboard() {
   const session = await getServerSession(authOptions);
   const items = Array.from(
-    { length: 7 },
+    { length: 12 },
     (_, index) => `One Piece ${index + 1}`
   );
 
@@ -15,10 +15,11 @@ async function Dashboard() {
   // if (!session) {
   //   redirect("/api/auth/signin?callbackUrl=/server");
   // }
+
   return (
-    <div className="">
+    <div className="pb-12 sm:pb-0">
       {session ? (
-        <div className="md:px-16 md:py-8 sm:px-6 px-2   py-2 flex flex-col md:gap-16 gap-8">
+        <div className="md:px-16 md:py-8 sm:px-6 px-2   py-2 flex flex-col md:gap-16 gap-8 h-auto sm:min-h-full">
           {/* User Info */}
           <section className="flex flex-row  sm:gap-12 gap-6 ">
             <div className="flex justify-center items-center">
@@ -53,17 +54,17 @@ async function Dashboard() {
           </section>
 
           {/* Anime Bucket */}
-          <main className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2">
+          <main className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2 min-h-[80%]">
             {/* Completed List  */}
             <div className="rounded-md overflow-hidden bg-gray-900 h-full border border-gray-600">
               <h1 className="text-center font-semibold bg-gray-950 p-2">
                 Completed
               </h1>
-              <ul className="list flex flex-col gap-2 list-none max-h-[360px] overflow-y-auto ">
+              <ul className="list flex flex-col gap-2 list-none max-h-[440px] overflow-y-auto ">
                 {items.map((item, index) => (
                   <li
                     key={index}
-                    className="py-1 border-b border-black flex items-center pl-2"
+                    className="py-1 border-b border-black flex items-center justify-center font-medium"
                   >
                     {item}
                   </li>
@@ -72,16 +73,15 @@ async function Dashboard() {
             </div>
 
             {/* OnHold */}
-            {/* Completed List  */}
             <div className="rounded-md overflow-hidden bg-gray-900 h-full border border-gray-600">
               <h1 className="text-center font-semibold bg-gray-950 p-2">
                 Completed
               </h1>
-              <ul className="list flex flex-col gap-2 list-none max-h-[360px] overflow-y-auto ">
+              <ul className="list flex flex-col gap-2 list-none max-h-[440px] overflow-y-auto ">
                 {items.map((item, index) => (
                   <li
                     key={index}
-                    className="py-1 border-b border-black flex items-center pl-2"
+                    className="py-1 border-b border-black flex items-center justify-center font-medium"
                   >
                     {item}
                   </li>
@@ -90,16 +90,15 @@ async function Dashboard() {
             </div>
 
             {/* To watch */}
-            {/* Completed List  */}
             <div className="rounded-md overflow-hidden bg-gray-900 h-full border border-gray-600">
               <h1 className="text-center font-semibold bg-gray-950 p-2">
-                Completed
+                To Watch
               </h1>
-              <ul className="list flex flex-col gap-2 list-none max-h-[360px] overflow-y-auto ">
+              <ul className="list flex flex-col gap-2 list-none max-h-[440px] overflow-y-auto ">
                 {items.map((item, index) => (
                   <li
                     key={index}
-                    className="py-1 border-b border-black flex items-center pl-2  flex-grow"
+                    className="py-1 border-b border-black flex items-center justify-center font-medium"
                   >
                     {item}
                   </li>
