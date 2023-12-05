@@ -1,17 +1,13 @@
-"use client";
-import { useSession } from "next-auth/react";
 import React from "react";
-import Avatar from "react-avatar";
 import SignUp from "./SignUp";
 import Logout from "./Logout";
-import Loader from "./Loader";
+import Link from "next/link";
+import Image from "next/image";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
-function Navbar() {
-  const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return <Loader></Loader>;
-  }
+async function Navbar() {
+  const session = await getServerSession(authOptions);
 
   return (
     <div className="sticky z-[100] top-0 px-4 py-2 flex justify-between items-center bg-[#111111] opacity-90">
@@ -19,9 +15,22 @@ function Navbar() {
       {session ? (
         <div className="flex items-center gap-2">
           <span className="font-semibold ">
-            {session?.user?.name?.split(" ")[0]}
+            <Link
+              href={
+                `/${session?.user?.name?.split(" ")[0]}/dashboard` || "/home"
+              }
+            >
+              {session?.user?.name?.split(" ")[0]}
+            </Link>
           </span>
-          <Avatar src={session.user?.image!} size="40" round={true} />
+          {/* <Avatar src={session.user?.image!} size="40" round={true} /> */}
+          <Image
+            src={session?.user?.image!}
+            width={40}
+            height={40}
+            alt="pfp"
+            className="rounded-full"
+          />
           <Logout></Logout>
         </div>
       ) : (
