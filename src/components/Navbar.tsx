@@ -8,7 +8,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 async function Navbar() {
   const session = await getServerSession(authOptions);
-
+  console.log(session);
   return (
     <div className="sticky z-[100] top-0 px-4 py-2 flex justify-between items-center bg-[#111111] opacity-90">
       <span className="font-bold text-base">Logo</span>

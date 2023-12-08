@@ -12,11 +12,19 @@ const User =
   mongoose.model(
     "User",
     new mongoose.Schema({
-      name: String,
-      username: { type: String, unique: true },
+      // name: String,
+      username: { type: String },
       email: { type: String, unique: true },
-      password: String,
-      category: [animeSchema],
+      // password: String,
+      category: {
+        type: animeSchema,
+        default: {
+          onHold: [],
+          watching: [],
+          completed: [],
+          toWatch: [],
+        },
+      },
     })
   );
 

@@ -24,6 +24,15 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
 
   // console.log(title);
 
+  const addToHold = async (animeName: string, category: String) => {
+    console.log(animeName);
+    const response = await axios.post("http://localhost:3000/api/addToHold", {
+      animeName,
+      animeCategory: category,
+    });
+    console.log(response.data);
+  };
+
   useEffect(() => {
     const fetchAnimeDetail = async () => {
       try {
@@ -75,9 +84,9 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
     showDialog === "y" ? (
       <dialog
         ref={dialogRef}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-1000 rounded-xl backdrop-filter backdrop-blur-md"
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-1000 rounded-xl backdrop-filter backdrop-blur-lg"
       >
-        <div className="w-[500px] max-w-full bg-[#151414] text-white flex flex-col">
+        <div className="w-[560px] max-w-full bg-[#151414] text-white flex flex-col">
           {/* Heading */}
           <div className="flex justify-between flex-row mb-4 py-2 px-5 bg-gray-950">
             <h1 className="text-2xl font-semibold">
@@ -96,15 +105,15 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                 <Image
                   src={animeData?.attributes?.coverImage.original!}
                   alt={animeData?.attributes?.titles.en || "Anime Poster"}
-                  width={100}
+                  width={400}
                   height={200}
                   className="rounded-xl"
                 />
               </div>
-              <div className="flex flex-wrap overflow-hidde justify-aroundn text-ellipsis w-full">
-                <span className="block">
-                  {animeData?.attributes?.description.split(".")[0]}...
-                </span>
+              <div className="flex flex-wrap overflow-hidden text-ellipsis w-full px-2">
+                <div className="flex h-64 overflow-y-auto mb-5  ">
+                  {animeData?.attributes?.description}...
+                </div>
                 <div className="flex flex-row gap-4 ">
                   <div className="flex items-center gap-2">
                     <Image
@@ -135,27 +144,47 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
             </main>
 
             <div className="flex justify-evenly mt-4">
-              <section className="grid md:grid-cols-4 grid-cols-2 gap-4">
+              <section className="grid sm:grid-cols-4 grid-cols-2 gap-2 sm:gap-4">
                 <button
-                  onClick={clickOk}
+                  onClick={() =>
+                    addToHold(
+                      animeData?.attributes?.titles?.en || " ",
+                      "toWatch" || ""
+                    )
+                  }
                   className="col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
                 >
                   To Watch
                 </button>
                 <button
-                  onClick={clickOk}
+                  onClick={() =>
+                    addToHold(
+                      animeData?.attributes?.titles?.en || " ",
+                      "completed" || ""
+                    )
+                  }
                   className="col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
                 >
                   Completed
                 </button>
                 <button
-                  onClick={clickOk}
+                  onClick={() =>
+                    addToHold(
+                      animeData?.attributes?.titles?.en || " ",
+                      "onHold" || ""
+                    )
+                  }
                   className="col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
                 >
                   On Hold
                 </button>
                 <button
-                  onClick={clickOk}
+                  onClick={() =>
+                    addToHold(
+                      animeData?.attributes?.titles?.en || " ",
+                      "watching" || ""
+                    )
+                  }
                   className="col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
                 >
                   Watching
