@@ -7,13 +7,15 @@ export const fetchAnime = async (page: number, name?: string) => {
   let baseAPI;
 
   if (name) {
-    baseAPI = `https://kitsu.io/api/edge/anime?filter[text]=${encodeURIComponent(
-      name
-    )}&page[limit]=8&page[offset]=${page * 8}`;
+    baseAPI =
+      process.env.NEXT_PUBLIC_API_BASE +
+      `?filter[text]=${encodeURIComponent(name)}&page[limit]=8&page[offset]=${
+        page * 8
+      }`;
   } else {
-    baseAPI = `https://kitsu.io/api/edge/anime?page[limit]=8&page[offset]=${
-      page * 8
-    }`;
+    baseAPI =
+      process.env.NEXT_PUBLIC_API_BASE +
+      `?page[limit]=8&page[offset]=${page * 8}`;
   }
 
   try {

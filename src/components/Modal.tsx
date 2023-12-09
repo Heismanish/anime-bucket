@@ -26,19 +26,18 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
 
   const addToHold = async (animeName: string, category: string) => {
     console.log(animeName);
-    const response = await axios.post("http://localhost:3000/api/addToHold", {
+    const response = await axios.post("/api/addToHold", {
       animeName,
       animeCategory: category,
     });
     console.log(response.data);
   };
-
+  const apiBase = process.env.NEXT_PUBLIC_API_BASE!;
+  console.log(process.env.NEXT_PUBLIC_API_BASE);
   useEffect(() => {
     const fetchAnimeDetail = async () => {
       try {
-        const response = await axios.get(
-          `https://kitsu.io/api/edge/anime/${animeId}`
-        );
+        const response = await axios.get(apiBase + animeId);
         const data = await response.data;
         console.log(data.data);
         setAnimeData(data.data);
