@@ -16,7 +16,7 @@ function AnimeList() {
     (_, index) => `One Piece ${index + 1}`
   );
   const fetchAnime = async () => {
-    const response = await axios.get("/api/getAnimes");
+    const response = await axios.post("/api/getAnimes");
     const data = await response.data;
     setAnimeList(data.animes);
   };

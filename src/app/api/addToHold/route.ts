@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
-import { ensureDbConnected } from "@/lib/ensureDbConnected";
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 import { getServerSession } from "next-auth/next";
 // import { authOptions } from "../auth/[...nextauth]/route";
 import { User } from "@/models/Schema";
@@ -18,7 +16,7 @@ import { authOptions } from "@/lib/authOptions";
 //   };
 // }
 
-ensureDbConnected();
+// ensureDbConnected();
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const session = await getServerSession(authOptions);
@@ -28,7 +26,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     const { animeName, animeCategory } = await req.json();
-    console.log(animeName, session.user?.email, animeCategory);
+    // console.log(animeName, session.user?.email, animeCategory);
+
     const removeFromLists = ["onHold", "watching", "completed", "toWatch"];
     removeFromLists.forEach((list) => {
       if (list !== animeCategory) {
