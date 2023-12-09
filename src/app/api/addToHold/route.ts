@@ -3,8 +3,9 @@ import { ensureDbConnected } from "@/lib/ensureDbConnected";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/route";
+// import { authOptions } from "../auth/[...nextauth]/route";
 import { User } from "@/models/Schema";
+import { authOptions } from "@/lib/authOptions";
 
 // interface UserInterface {
 //   username: string;

@@ -1,6 +1,7 @@
 // "use client";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import AnimeList from "@/components/AnimeList";
+import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import React from "react";

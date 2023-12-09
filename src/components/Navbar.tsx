@@ -4,7 +4,8 @@ import Logout from "./Logout";
 import Link from "next/link";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
+// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 async function Navbar() {
   const session = await getServerSession(authOptions);
