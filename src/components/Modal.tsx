@@ -52,7 +52,7 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
     } else {
       dialogRef.current?.close();
     }
-  }, [showDialog]);
+  }, [showDialog, animeId, apiBase]);
 
   // useEffect(() => {
   //   console.log(animeData);
