@@ -6,23 +6,22 @@ const animeSchema = new mongoose.Schema({
   completed: [{ type: String }],
   toWatch: [{ type: String }],
 });
-
 const User =
   mongoose.models.User ||
   mongoose.model(
     "User",
     new mongoose.Schema({
-      // name: String,
-      username: { type: String },
+      username: { type: String, default: null },
       email: { type: String, unique: true },
-      // password: String,
       category: {
         type: animeSchema,
-        default: {
-          onHold: [],
-          watching: [],
-          completed: [],
-          toWatch: [],
+        default: function () {
+          return {
+            onHold: [],
+            watching: [],
+            completed: [],
+            toWatch: [],
+          };
         },
       },
     })

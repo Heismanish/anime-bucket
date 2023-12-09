@@ -7,20 +7,20 @@ import { useUserStore } from "@/store/zustand";
 function SignUp({ data }: { data: string }) {
   const router = useRouter();
   const { data: session } = useSession();
-  const { userInfo, updateUserInfo } = useUserStore();
+  // const { userInfo, updateUserInfo } = useUserStore();
   useEffect(() => {
     if (session && session.user) {
-      console.log(session.user);
-      updateUserInfo({
-        name: session.user.name || "", // Handle potential null or undefined values
-        email: session.user.email || "",
-        image: session.user.image || "",
-      });
-      console.log(userInfo);
+      // console.log(session.user);
+      // updateUserInfo({
+      //   name: session.user.name || "", // Handle potential null or undefined values
+      //   email: session.user.email || "",
+      //   image: session.user.image || "",
+      // });
+      // console.log(userInfo);
 
       router.push("/home");
     }
-  }, [session, router, updateUserInfo]);
+  }, [session, router]);
 
   return (
     <>

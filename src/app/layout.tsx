@@ -6,6 +6,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Provider from "./_context/client-provider";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+// import { useRouter } from "next/navigation";
+// import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,8 +27,6 @@ export default async function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Provider session={session}>
-          <Navbar />
-
           {children}
           <Footer></Footer>
         </Provider>

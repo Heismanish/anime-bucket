@@ -1,21 +1,17 @@
 // "use client";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import AnimeList from "@/components/AnimeList";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import React from "react";
 
 async function Dashboard() {
   const session = await getServerSession(authOptions);
-  const items = Array.from(
-    { length: 12 },
-    (_, index) => `One Piece ${index + 1}`
-  );
 
   // other way to protect this route.
   // if (!session) {
   //   redirect("/api/auth/signin?callbackUrl=/server");
   // }
-
   return (
     <div className="pb-12 sm:pb-0">
       {session ? (
@@ -54,58 +50,7 @@ async function Dashboard() {
           </section>
 
           {/* Anime Bucket */}
-          <main className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2 min-h-[80%]">
-            {/* Completed List  */}
-            <div className="rounded-md overflow-hidden bg-gray-900 h-full border border-gray-600">
-              <h1 className="text-center font-semibold bg-gray-950 p-2">
-                Completed
-              </h1>
-              <ul className="list flex flex-col gap-2 list-none max-h-[440px] overflow-y-auto ">
-                {items.map((item, index) => (
-                  <li
-                    key={index}
-                    className="py-1 border-b border-black flex items-center justify-center font-medium"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* OnHold */}
-            <div className="rounded-md overflow-hidden bg-gray-900 h-full border border-gray-600">
-              <h1 className="text-center font-semibold bg-gray-950 p-2">
-                Completed
-              </h1>
-              <ul className="list flex flex-col gap-2 list-none max-h-[440px] overflow-y-auto ">
-                {items.map((item, index) => (
-                  <li
-                    key={index}
-                    className="py-1 border-b border-black flex items-center justify-center font-medium"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* To watch */}
-            <div className="rounded-md overflow-hidden bg-gray-900 h-full border border-gray-600">
-              <h1 className="text-center font-semibold bg-gray-950 p-2">
-                To Watch
-              </h1>
-              <ul className="list flex flex-col gap-2 list-none max-h-[440px] overflow-y-auto ">
-                {items.map((item, index) => (
-                  <li
-                    key={index}
-                    className="py-1 border-b border-black flex items-center justify-center font-medium"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </main>
+          <AnimeList></AnimeList>
         </div>
       ) : (
         <div>

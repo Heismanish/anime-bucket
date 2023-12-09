@@ -24,7 +24,7 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
 
   // console.log(title);
 
-  const addToHold = async (animeName: string, category: String) => {
+  const addToHold = async (animeName: string, category: string) => {
     console.log(animeName);
     const response = await axios.post("http://localhost:3000/api/addToHold", {
       animeName,
@@ -55,12 +55,13 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
     }
   }, [showDialog]);
 
-  useEffect(() => {
-    console.log(animeData);
-  }, [animeData]);
+  // useEffect(() => {
+  //   console.log(animeData);
+  // }, [animeData]);
 
   const closeDialog = () => {
     dialogRef.current?.close();
+    setAnimeData({});
     router.push("/home");
     onClose();
   };
@@ -69,16 +70,6 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
     onOk();
     closeDialog();
   };
-
-  // const fetchAnimeDetail = async () => {
-  //   const response = await axios.get(
-  //     `https://kitsu.io/api/edge/anime?filter[text]=${animeData?.name}`
-  //   );
-  //   const data = await response.data;
-  //   console.log(data);
-  //   setAnimeData(data);
-  //   console.log(animeData);
-  // };
 
   const dialog: JSX.Element | null =
     showDialog === "y" ? (
@@ -152,7 +143,11 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                       "toWatch" || ""
                     )
                   }
-                  className="col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
+                  className={
+                    animeData
+                      ? "col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
+                      : `disabled col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white`
+                  }
                 >
                   To Watch
                 </button>
@@ -163,7 +158,11 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                       "completed" || ""
                     )
                   }
-                  className="col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
+                  className={
+                    animeData
+                      ? "col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
+                      : `disabled col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white`
+                  }
                 >
                   Completed
                 </button>
@@ -174,7 +173,11 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                       "onHold" || ""
                     )
                   }
-                  className="col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
+                  className={
+                    animeData
+                      ? "col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
+                      : `disabled col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white`
+                  }
                 >
                   On Hold
                 </button>
@@ -185,7 +188,11 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                       "watching" || ""
                     )
                   }
-                  className="col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
+                  className={
+                    animeData
+                      ? "col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white"
+                      : `disabled col-span-1 px-4 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white`
+                  }
                 >
                   Watching
                 </button>

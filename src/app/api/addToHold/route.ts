@@ -27,7 +27,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     const { animeName, animeCategory } = await req.json();
-    console.log(animeName, session.user?.email);
+    console.log(animeName, session.user?.email, animeCategory);
+    const removeFromLists = ["onHold", "watching", "completed", "toWatch"];
+    removeFromLists.forEach((list) => {
+      if (list !== animeCategory) {
+        User.updateOne(
+          { email: session.user?.email },
+          { $pull: { [`category.${list}`]: animeName } }
+        ).exec();
+      }
+    });
+
     const update = {
       $push: { [`category.${animeCategory}`]: animeName },
     };
@@ -35,6 +45,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const userInDb = await User.findOneAndUpdate(
       {
         email: session.user?.email,
+        [`category.${animeCategory}`]: { $ne: animeName },
       },
       update,
       { new: true }
@@ -49,5 +60,4 @@ export async function POST(req: NextRequest, res: NextResponse) {
   } catch (error: any) {
     throw new Error(error.message);
   }
-  //   return NextResponse.json({ user });
 }
