@@ -1,6 +1,8 @@
 // "use client";
 // import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import AnimeList from "@/components/AnimeList";
+import Navbar from "@/components/Navbar";
+import SignUp from "@/components/SignUp";
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
@@ -15,6 +17,7 @@ async function Dashboard() {
   // }
   return (
     <div className="pb-12 sm:pb-0">
+      <Navbar></Navbar>
       {session ? (
         <div className="md:px-16 md:py-8 sm:px-6 px-2   py-2 flex flex-col md:gap-16 gap-8 h-auto sm:min-h-full">
           {/* User Info */}
@@ -54,8 +57,10 @@ async function Dashboard() {
           <AnimeList></AnimeList>
         </div>
       ) : (
-        <div>
-          <h1>User login required</h1>
+        <div className="flex flex-col gap-4 justify-center items-center font-semibold sm:pt-18 pt-12 ">
+          <h1 className="text-2xl">User login required</h1>
+          <span className="text-3xl">⬇️</span>
+          <SignUp data="Login To Continue"></SignUp>
         </div>
       )}
     </div>

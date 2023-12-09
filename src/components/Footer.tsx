@@ -2,8 +2,8 @@ import Image from "next/image";
 
 function Footer() {
   return (
-    <footer className="fixed bottom-0  w-screen sm:px-16  px-8 flex justify-between items-center gap-2 flex-wrap bg-[#161921]">
-      <p className="text-base font-bold text-white">
+    <footer className="fixed bottom-0  w-screen sm:px-16  py-1 px-8 flex justify-center items-center gap-2 flex-wrap bg-[#0e1015]">
+      <p className="text-base text-[#ababab]">
         Made with ❤️ by
         <a
           href="https://github.com/Heismanish/"
@@ -13,7 +13,7 @@ function Footer() {
           @heismanish{" "}
         </a>{" "}
       </p>
-      <Image
+      {/* <Image
         src="./logo.svg"
         alt="logo"
         width={40}
@@ -28,7 +28,7 @@ function Footer() {
           height={19}
           className="object-contain"
         />
-      </div>
+      </div> */}
     </footer>
   );
 }

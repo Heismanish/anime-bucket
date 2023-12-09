@@ -12,7 +12,12 @@ async function Navbar() {
   console.log(session);
   return (
     <div className="sticky z-[100] top-0 px-4 py-2 flex justify-between items-center bg-[#111111] opacity-90">
-      <span className="font-bold text-base">Logo</span>
+      <span className="font-bold text-lg">
+        {" "}
+        <Link href={"/home"}>
+          Ani<span className="text-blue-500">Bucket</span>
+        </Link>
+      </span>
       {session ? (
         <div className="flex items-center gap-2">
           <span className="font-semibold ">
