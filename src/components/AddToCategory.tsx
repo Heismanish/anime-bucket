@@ -8,21 +8,17 @@ import { useRouter } from "next/navigation";
 function AddToCategory({ key }: { key: string }) {
   const { data: session } = useSession();
   const router = useRouter();
-  console.log(key);
-  console.log(session);
   const showCategoryModal = () => {
     if (!session) {
       toast.error("User login required!");
       return;
     }
-    toast.success("Userd!");
+
     router.push(`?showDialog=y&key=${key}`);
   };
   return (
     <div>
-      <div>
-        <Toaster />
-      </div>
+      <Toaster />
 
       <button
         className="p-2 hover:bg-gray-100 bg-gray-300 border border-gray-100 rounded-md transition-all"

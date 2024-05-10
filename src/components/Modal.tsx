@@ -6,6 +6,9 @@ import axios from "axios";
 import { AnimeData } from "@/lib/AnimeData";
 import Image from "next/image";
 import { AnimeDataHome } from "@/lib/AnimeResponse";
+import Loader from "./Loader";
+import { toast, Toaster } from "react-hot-toast";
+import { z } from "zod";
 
 type Props = {
   title: string;
@@ -14,38 +17,58 @@ type Props = {
   children: React.ReactNode;
 };
 
+const apiBase = process.env.NEXT_PUBLIC_API_BASE!;
+
 function CategoryModal({ title, onClose, onOk, children }: Props) {
   const searchParams = useSearchParams();
-  const [animeData, setAnimeData] = useState<Partial<AnimeDataHome>>();
+  const [animeData, setAnimeData] = useState<Partial<AnimeDataHome> | null>(
+    null
+  );
+  const [loading, setLoading] = useState<boolean>(false);
   const dialogRef = useRef<null | HTMLDialogElement>(null);
   const showDialog = searchParams.get("showDialog");
   const router = useRouter();
   const animeId = searchParams.get("key");
 
-  // console.log(title);
+  // zod schema validator:
+  const apiInput = z.string().min(2);
 
-  const addToHold = async (animeName: string, category: string) => {
-    console.log(animeName);
-    const response = await axios.post("/api/addToHold", {
-      animeName,
-      animeCategory: category,
-    });
-    console.log(response.data);
-  };
-  const apiBase = process.env.NEXT_PUBLIC_API_BASE!;
-  console.log(process.env.NEXT_PUBLIC_API_BASE);
-  useEffect(() => {
-    const fetchAnimeDetail = async () => {
-      try {
-        const response = await axios.get(apiBase + animeId);
-        const data = await response.data;
-        console.log(data.data);
-        setAnimeData(data.data);
-      } catch (error) {
-        console.error("Error fetching anime data:", error);
+  const addToList = async (animeName: string, category: string) => {
+    try {
+      apiInput.parse(animeName);
+      apiInput.parse(category);
+
+      console.log(animeName);
+      const response = await axios.post("/api/addToHold", {
+        animeName,
+        animeCategory: category,
+      });
+
+      console.log(response.status);
+      if (response.status == 200) {
+        toast(`${animeName} adde to ${category}`);
       }
-    };
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  const fetchAnimeDetail = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(apiBase + animeId);
+      const data = await response.data;
+      // console.log(data.data);
+      if (data) {
+        setLoading(true);
+      }
+      setAnimeData(data.data);
+    } catch (error) {
+      console.error("Error fetching anime data:", error);
+    }
+  };
+
+  useEffect(() => {
     if (showDialog === "y") {
       dialogRef.current?.showModal();
       fetchAnimeDetail();
@@ -70,12 +93,13 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
     closeDialog();
   };
 
-  const dialog: JSX.Element | null =
-    showDialog === "y" ? (
-      <dialog
-        ref={dialogRef}
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-1000 rounded-xl backdrop-filter backdrop-blur-lg"
-      >
+  const dialog = showDialog === "y" && (
+    <dialog
+      ref={dialogRef}
+      className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-1000 rounded-xl backdrop-filter backdrop-blur-lg"
+    >
+      <Toaster />
+      {
         <div className="w-[560px] max-w-full bg-[#151414] text-white flex flex-col">
           {/* Heading */}
           <div className="flex justify-between flex-row mb-4 py-2 px-5 bg-gray-950">
@@ -137,7 +161,7 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
               <section className="grid sm:grid-cols-4 grid-cols-2 gap-2 sm:gap-4">
                 <button
                   onClick={() =>
-                    addToHold(
+                    addToList(
                       animeData?.attributes?.titles?.en || " ",
                       "toWatch" || ""
                     )
@@ -152,7 +176,7 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                 </button>
                 <button
                   onClick={() =>
-                    addToHold(
+                    addToList(
                       animeData?.attributes?.titles?.en || " ",
                       "completed" || ""
                     )
@@ -167,7 +191,7 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                 </button>
                 <button
                   onClick={() =>
-                    addToHold(
+                    addToList(
                       animeData?.attributes?.titles?.en || " ",
                       "onHold" || ""
                     )
@@ -182,7 +206,7 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                 </button>
                 <button
                   onClick={() =>
-                    addToHold(
+                    addToList(
                       animeData?.attributes?.titles?.en || " ",
                       "watching" || ""
                     )
@@ -199,8 +223,10 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
             </div>
           </div>
         </div>
-      </dialog>
-    ) : null;
+      }
+    </dialog>
+  );
+
   return dialog;
 }
 
