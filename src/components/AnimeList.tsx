@@ -20,10 +20,12 @@ function AnimeList() {
     const data = await response.data;
     setAnimeList(data.animes);
   };
+
   useEffect(() => {
     fetchAnime();
     // console.log(data);
   }, []);
+
   return (
     <div>
       {" "}

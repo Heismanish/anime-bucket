@@ -22,7 +22,7 @@ async function Home() {
     <div>
       <Navbar></Navbar>
       <CategoryModal title={"akfsj"} onClose={onClose} onOk={onOk}>
-        {"alksn"}
+        {""}
       </CategoryModal>
       <main className="sm:p-8 py-12 px-8 flex flex-col gap-10 ">
         {/* <h2 className="text-3xl text-white font-bold">Explore Anime</h2> */}
