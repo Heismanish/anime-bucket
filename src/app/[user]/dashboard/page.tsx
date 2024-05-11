@@ -8,7 +8,7 @@ import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import Image from "next/image";
 import React from "react";
-
+import Logout from "@/components/Logout";
 async function Dashboard() {
   const session = await getServerSession(authOptions);
 
@@ -22,7 +22,7 @@ async function Dashboard() {
       {session ? (
         <div className="md:px-16 md:py-8 sm:px-6 px-2   py-2 flex flex-col md:gap-16 gap-8 h-auto sm:min-h-full">
           {/* User Info */}
-          <section className="flex flex-row  sm:gap-12 gap-6 ">
+          <section className="flex flex-row  sm:gap-12 gap-6 justify-between">
             <div className="flex justify-center items-center">
               <Image
                 src={session?.user?.image || ""}
@@ -42,6 +42,8 @@ async function Dashboard() {
               </p>
               <Counts />
             </div>
+
+            <Logout />
           </section>
 
           {/* Anime Bucket */}

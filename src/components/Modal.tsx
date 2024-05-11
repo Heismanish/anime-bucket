@@ -117,7 +117,7 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
             <main className="flex gap-4">
               <div className="flex gap-4 min-h-[200px] min-w-[100px]">
                 <Image
-                  src={animeData?.attributes?.coverImage.original!}
+                  src={animeData?.attributes?.coverImage.original! || ""}
                   alt={animeData?.attributes?.titles.en || "Anime Poster"}
                   width={400}
                   height={200}
