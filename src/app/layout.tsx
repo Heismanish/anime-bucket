@@ -2,13 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { getServerSession } from "next-auth/next";
-// import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Provider from "./_context/client-provider";
 import Footer from "@/components/Footer";
-import Navbar from "@/components/Navbar";
+
 import { authOptions } from "@/lib/authOptions";
-// import { useRouter } from "next/navigation";
-// import { useRouter } from "next/router";
 
 const inter = Inter({ subsets: ["latin"] });
 

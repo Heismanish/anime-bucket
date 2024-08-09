@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 function AddToCategory({ key }: { key: string }) {
   const { data: session } = useSession();
   const router = useRouter();
+
   const showCategoryModal = () => {
     if (!session) {
       toast.error("User login required!");
@@ -18,7 +19,7 @@ function AddToCategory({ key }: { key: string }) {
   };
   return (
     <div>
-      <Toaster />
+      {/* 
 
       <button
         className="p-2 hover:bg-gray-100 bg-gray-300 border border-gray-100 rounded-md transition-all"
@@ -31,7 +32,7 @@ function AddToCategory({ key }: { key: string }) {
           height={18}
           className="object-contain"
         />
-      </button>
+      </button> */}
     </div>
   );
 }

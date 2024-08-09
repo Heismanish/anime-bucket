@@ -8,6 +8,7 @@ function SignUp({ data }: { data: string }) {
   const router = useRouter();
   const { data: session } = useSession();
   // const { userInfo, updateUserInfo } = useUserStore();
+
   useEffect(() => {
     if (session && session.user) {
       // console.log(session.user);

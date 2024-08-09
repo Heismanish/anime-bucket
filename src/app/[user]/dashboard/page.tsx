@@ -9,6 +9,7 @@ import { getServerSession } from "next-auth";
 import Image from "next/image";
 import React from "react";
 import Logout from "@/components/Logout";
+
 async function Dashboard() {
   const session = await getServerSession(authOptions);
 
@@ -16,33 +17,35 @@ async function Dashboard() {
   // if (!session) {
   //   redirect("/api/auth/signin?callbackUrl=/server");
   // }
+
   return (
     <div className="pb-12 sm:pb-0">
-      <Navbar></Navbar>
+      <Navbar />
       {session ? (
         <div className="md:px-16 md:py-8 sm:px-6 px-2   py-2 flex flex-col md:gap-16 gap-8 h-auto sm:min-h-full">
           {/* User Info */}
-          <section className="flex flex-row  sm:gap-12 gap-6 justify-between">
-            <div className="flex justify-center items-center">
-              <Image
-                src={session?.user?.image || ""}
-                width={100}
-                height={100}
-                alt="pfp"
-                className="rounded-full border-2 border-white"
-              />
+          <section className="flex sm:flex-row  flex-col sm:gap-12 gap-6 justify-between  sm:items-start items-center">
+            <div className="flex sm:flex-row  flex-col sm:gap-12 gap-10  ">
+              <div className="flex justify-center items-center">
+                <Image
+                  src={session?.user?.image || ""}
+                  width={100}
+                  height={100}
+                  alt="pfp"
+                  className="rounded-full border-2 border-white"
+                />
+              </div>
+              {/* user info */}
+              <div>
+                <h1 className="sm:text-2xl text-lg font-semibold">
+                  {session.user?.name}
+                </h1>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  {session?.user?.email}
+                </p>
+                <Counts />
+              </div>
             </div>
-            {/* user info */}
-            <div>
-              <h1 className="sm:text-2xl text-lg font-semibold">
-                {session.user?.name}
-              </h1>
-              <p className="text-xs sm:text-sm text-gray-500">
-                {session?.user?.email}
-              </p>
-              <Counts />
-            </div>
-
             <Logout />
           </section>
 

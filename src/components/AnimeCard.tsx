@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { MotionDiv } from "./MotionDiv";
 import AddToCategory from "./AddToCategory";
-import CategoryModal from "./Modal";
+
 import Link from "next/link";
 import { AnimeDataHome } from "@/lib/AnimeResponse";
+import { Toaster } from "react-hot-toast";
 
 export interface AnimeProp {
   id: string;
@@ -43,8 +44,10 @@ function AnimeCard({ anime, index }: Prop) {
         duration: 0.5,
       }}
       viewport={{ amount: 0 }}
-      className="max-w-sm rounded relative w-full"
+      className="max-w-sm relative w-full hover:scale-105 transistion duration-200 "
     >
+      <Toaster position="top-center" reverseOrder={false} />
+
       <div className="relative w-full h-[37vh]">
         <Image
           src={anime?.attributes?.coverImage?.original!}
@@ -55,7 +58,7 @@ function AnimeCard({ anime, index }: Prop) {
       </div>
       <div className="py-4 flex flex-col gap-3">
         <div className="flex justify-between items-center gap-1">
-          <h2 className="font-bold text-white text-xl line-clamp-1 w-full">
+          <h2 className="font-bold text-white text-xl line-clamp-1 w-full hover:text-gray-300">
             <Link href={`?showDialog=y&key=${anime.id}`}>
               {anime.attributes.titles.en}
             </Link>

@@ -3,15 +3,13 @@ import React, { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useRef, useEffect } from "react";
 import axios from "axios";
-import { AnimeData } from "@/lib/AnimeData";
 import Image from "next/image";
 import { AnimeDataHome } from "@/lib/AnimeResponse";
-import Loader from "./Loader";
 import { toast, Toaster } from "react-hot-toast";
 import { z } from "zod";
+import { ConnectionStates } from "mongoose";
 
 type Props = {
-  title: string;
   onClose: () => {};
   onOk: () => {};
   children: React.ReactNode;
@@ -19,7 +17,7 @@ type Props = {
 
 const apiBase = process.env.NEXT_PUBLIC_API_BASE!;
 
-function CategoryModal({ title, onClose, onOk, children }: Props) {
+function CategoryModal({ onClose, onOk, children }: Props) {
   const searchParams = useSearchParams();
   const [animeData, setAnimeData] = useState<Partial<AnimeDataHome> | null>(
     null
@@ -33,7 +31,10 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
   // zod schema validator:
   const apiInput = z.string().min(2);
 
-  const addToList = async (animeName: string, category: string) => {
+  const addToList = async (
+    animeName: string,
+    category: "toWatch" | "onHold" | "completed" | "watching"
+  ) => {
     try {
       apiInput.parse(animeName);
       apiInput.parse(category);
@@ -45,8 +46,10 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
       });
 
       console.log(response.status);
-      if (response.status == 200) {
-        toast(`${animeName} adde to ${category}`);
+
+      if (response.status === 200) {
+        console.log("Fethced");
+        toast.success(`${animeName} added to ${category}`);
       }
     } catch (error) {
       console.log(error);
@@ -58,7 +61,7 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
       setLoading(true);
       const response = await axios.get(apiBase + animeId);
       const data = await response.data;
-      // console.log(data.data);
+
       if (data) {
         setLoading(true);
       }
@@ -77,13 +80,9 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
     }
   }, [showDialog, animeId, apiBase]);
 
-  // useEffect(() => {
-  //   console.log(animeData);
-  // }, [animeData]);
-
   const closeDialog = () => {
     dialogRef.current?.close();
-    setAnimeData({});
+    setAnimeData(null);
     router.push("/home");
     onClose();
   };
@@ -98,7 +97,6 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
       ref={dialogRef}
       className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-1000 rounded-xl backdrop-filter backdrop-blur-lg"
     >
-      <Toaster />
       {
         <div className="w-[560px] max-w-full bg-[#151414] text-white flex flex-col">
           {/* Heading */}
@@ -162,8 +160,8 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                 <button
                   onClick={() =>
                     addToList(
-                      animeData?.attributes?.titles?.en || " ",
-                      "toWatch" || ""
+                      animeData?.attributes?.titles?.en || "",
+                      "toWatch"
                     )
                   }
                   className={
@@ -177,8 +175,8 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                 <button
                   onClick={() =>
                     addToList(
-                      animeData?.attributes?.titles?.en || " ",
-                      "completed" || ""
+                      animeData?.attributes?.titles?.en || "",
+                      "completed"
                     )
                   }
                   className={
@@ -191,10 +189,7 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                 </button>
                 <button
                   onClick={() =>
-                    addToList(
-                      animeData?.attributes?.titles?.en || " ",
-                      "onHold" || ""
-                    )
+                    addToList(animeData?.attributes?.titles?.en || "", "onHold")
                   }
                   className={
                     animeData
@@ -207,8 +202,8 @@ function CategoryModal({ title, onClose, onOk, children }: Props) {
                 <button
                   onClick={() =>
                     addToList(
-                      animeData?.attributes?.titles?.en || " ",
-                      "watching" || ""
+                      animeData?.attributes?.titles?.en || "",
+                      "watching"
                     )
                   }
                   className={
