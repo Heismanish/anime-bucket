@@ -46,8 +46,6 @@ function AnimeCard({ anime, index }: Prop) {
       viewport={{ amount: 0 }}
       className="max-w-sm relative w-full hover:scale-105 transistion duration-200 "
     >
-      <Toaster position="top-center" reverseOrder={false} />
-
       <div className="relative w-full h-[37vh]">
         <Image
           src={anime?.attributes?.coverImage?.original!}
